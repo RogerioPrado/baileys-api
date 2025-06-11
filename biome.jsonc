@@ -1,0 +1,39 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "include": ["src/**/*.ts", "scripts/**/*.ts", "git-hooks.config.ts"]
+  },
+  "organizeImports": {
+    "enabled": true,
+    "include": ["src/**/*.ts", "scripts/**/*.ts"]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "style": {
+        "useNamingConvention": "off"
+      },
+      "correctness": {
+        // NOTE: Biome does not recognize aliased imports.
+        "noUndeclaredDependencies": "off",
+        "useImportExtensions": "off",
+        // NOTE: This isn't React...
+        "useHookAtTopLevel": "off",
+        "noNodejsModules": "off"
+      },
+      "performance": {
+        "useTopLevelRegex": "off"
+      },
+      "suspicious": {
+        // NOTE: This is redundant with `noConsole`.
+        "noConsoleLog": "off"
+      }
+    },
+    "include": ["src/**/*.ts"]
+  }
+}
