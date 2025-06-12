@@ -54,6 +54,12 @@ const connectionsController = new Elysia({
             default: true,
           }),
         ),
+        syncFullHistory: t.Optional(
+          t.Boolean({
+            description: "Sync full history of messages on connection.",
+            default: false,
+          }),
+        ),
       }),
       detail: {
         responses: {
@@ -194,6 +200,31 @@ const connectionsController = new Elysia({
           200: {
             description: "Chat modification was successfully applied",
           },
+        },
+      },
+    },
+  )
+  .post(
+    "/:phoneNumber/fetch-message-history",
+    ({ params, body }) => {
+      const { phoneNumber } = params;
+      return baileys.fetchMessageHistory(phoneNumber, body);
+    },
+    {
+      params: phoneNumberParams,
+      body: t.Object({
+        count: t.Number({
+          minimum: 1,
+          maximum: 50,
+          description: "Number of messages to fetch",
+          example: 10,
+        }),
+        oldestMsgKey: iMessageKey,
+        oldestMsgTimestamp: t.Number(),
+      }),
+      detail: {
+        responses: {
+          200: { description: "Message history fetched" },
         },
       },
     },

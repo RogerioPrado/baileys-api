@@ -3,7 +3,10 @@ import {
   BaileysNotConnectedError,
 } from "@/baileys/connection";
 import { getRedisSavedAuthStateIds } from "@/baileys/redisAuthState";
-import type { BaileysConnectionOptions } from "@/baileys/types";
+import type {
+  BaileysConnectionOptions,
+  FetchMessageHistoryOptions,
+} from "@/baileys/types";
 import logger from "@/lib/logger";
 import type {
   AnyMessageContent,
@@ -95,6 +98,17 @@ export class BaileysConnectionsHandler {
 
   chatModify(phoneNumber: string, mod: ChatModification, jid: string) {
     return this.getConnection(phoneNumber).chatModify(mod, jid);
+  }
+
+  fetchMessageHistory(
+    phoneNumber: string,
+    { count, oldestMsgKey, oldestMsgTimestamp }: FetchMessageHistoryOptions,
+  ) {
+    return this.getConnection(phoneNumber).fetchMessageHistory(
+      count,
+      oldestMsgKey,
+      oldestMsgTimestamp,
+    );
   }
 
   async logout(phoneNumber: string) {
